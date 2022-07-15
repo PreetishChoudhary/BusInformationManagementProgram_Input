@@ -67,23 +67,57 @@ namespace BusInformationManagementProgram_Input
         void CreateRecord(string busNumber, string time, string date, string status)
         {
             string type = "SchoolBuses/";
-            BusRecord[] record = busRecordArray[Convert.ToInt32(busNumber)];
+            BusRecord[] testRecord = busRecordArray[Convert.ToInt32(busNumber)];
+            BusRecord[] record = new BusRecord[testRecord.Length + 1];
+            for(int i = 0; i<testRecord.Length; i++)
+            {
+                record[i] = testRecord[i];
+            }
             BusRecord b = new BusRecord();
             b.busNumber = Convert.ToInt32(busNumber) + 1;
-            b.arrivalDate = Convert.ToInt32(date);
-            record.Append(b);
+            b.arrivalDate = Convert.ToInt32(date); record.Append(b);
 
             XmlDocument doc = new XmlDocument();
-            doc.Load(type + "BusData_" + busNumber + ".xml");
+            doc.Load(type + "BusData_" + b.busNumber + ".xml");
             XmlNode root = doc.DocumentElement;
             //Create a new node.
             XmlElement busData = doc.CreateElement("BusData");
             XmlElement atSchool = doc.CreateElement("atSchool");
-            XmlElement arrivalStatus = doc.CreateElement("arrivalTime");
+            XmlElement arrivalTime = doc.CreateElement("arrivalTime");
             XmlElement departureTime = doc.CreateElement("departureTime");
+            departureTime.InnerText = "0";
+            arrivalTime.InnerText = "0";
+            b.arrivalTime = 0;
+            b.departTime = 0;
             busData.AppendChild(atSchool);
-            root.AppendChild(busData);
-            doc.Save(type + "BusData_" + busNumber + ".xml");
+            busData.AppendChild(arrivalTime);
+            busData.AppendChild(departureTime);
+
+            if (status == "In")
+            {
+                departureTime.InnerText = time;
+                atSchool.InnerText = "False";
+                b.departTime = Convert.ToInt32(time);
+                root.LastChild.LastChild.InnerText = time;
+                busData.AppendChild(departureTime);
+            }
+
+            if (status == "Out" || status == "none")
+            {
+                b.atSchool = true;
+                busData.SetAttribute("date", date);
+                root.AppendChild(busData);
+                arrivalTime.InnerText = time;
+                atSchool.InnerText = "True";
+                b.arrivalTime = Convert.ToInt32(time);
+                busData.AppendChild(arrivalTime);
+                busData.AppendChild(departureTime);
+            }
+            busData.AppendChild(atSchool);
+
+            record[record.Length - 1] = b;
+            busRecordArray[Convert.ToInt32(busNumber)] = record;
+            doc.Save(type + "BusData_" + b.busNumber + ".xml");
         }
 
         string CheckStatus(int busNumber, string date)
@@ -136,11 +170,14 @@ namespace BusInformationManagementProgram_Input
             currentTime.Text = time;
             currentDate.Text = date;
             string status = CheckStatus(Convert.ToInt32(cmbBxBusNumber.SelectedIndex.ToString()), DateTime.Now.ToString("ddMMyy"));
-            /*if(status == "none")
-            {
-                btnCheck.Text = "Check In";
-            }
-            else if (status == "In")
+
+            CreateRecord(cmbBxBusNumber.SelectedIndex.ToString(), DateTime.Now.ToString("HHmm"), DateTime.Now.ToString("ddMMyy"), status);
+        }
+
+        private void cmbBxBusNumber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string status = CheckStatus(Convert.ToInt32(cmbBxBusNumber.SelectedIndex.ToString()), DateTime.Now.ToString("ddMMyy"));
+            if(status == "In")
             {
                 btnCheck.Text = "Check Out";
             }
@@ -148,9 +185,6 @@ namespace BusInformationManagementProgram_Input
             {
                 btnCheck.Text = "Check In";
             }
-            */
-
-            CreateRecord(cmbBxBusNumber.SelectedIndex.ToString(), DateTime.Now.ToString("HHmm"), DateTime.Now.ToString("ddMMyy"), status);
         }
     }
 }

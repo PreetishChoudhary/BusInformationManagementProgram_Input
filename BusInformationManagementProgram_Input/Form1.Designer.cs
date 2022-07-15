@@ -53,7 +53,7 @@ namespace BusInformationManagementProgram_Input
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(75, 23);
             this.btnCheck.TabIndex = 2;
-            this.btnCheck.Text = "CheckIn";
+            this.btnCheck.Text = "Check In";
             this.btnCheck.UseVisualStyleBackColor = true;
             this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
@@ -64,6 +64,7 @@ namespace BusInformationManagementProgram_Input
             this.cmbBxBusNumber.Name = "cmbBxBusNumber";
             this.cmbBxBusNumber.Size = new System.Drawing.Size(121, 21);
             this.cmbBxBusNumber.TabIndex = 3;
+            this.cmbBxBusNumber.SelectedIndexChanged += new System.EventHandler(this.cmbBxBusNumber_SelectedIndexChanged);
             // 
             // Time
             // 
