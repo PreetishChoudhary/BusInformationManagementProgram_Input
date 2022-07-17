@@ -99,6 +99,7 @@ namespace BusInformationManagementProgram_Input
                 atSchool.InnerText = "False";
                 b.departTime = Convert.ToInt32(time);
                 root.LastChild.LastChild.InnerText = time;
+                busData.AppendChild(atSchool);
                 busData.AppendChild(departureTime);
             }
 
@@ -110,10 +111,10 @@ namespace BusInformationManagementProgram_Input
                 arrivalTime.InnerText = time;
                 atSchool.InnerText = "True";
                 b.arrivalTime = Convert.ToInt32(time);
+                busData.AppendChild(atSchool);
                 busData.AppendChild(arrivalTime);
                 busData.AppendChild(departureTime);
             }
-            busData.AppendChild(atSchool);
 
             record[record.Length - 1] = b;
             busRecordArray[Convert.ToInt32(busNumber)] = record;
@@ -152,7 +153,12 @@ namespace BusInformationManagementProgram_Input
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //string time = DateTime.Now.ToString("HH:mm");
+            string time = DateTime.Now.ToString("HH:mm");
+            string date = DateTime.Now.ToString("dd/MM/yy");
+
+            currentTime.Text = time;
+            currentDate.Text = date;
+
             FillComboBox("BusList.txt");
 
             for(int i = 1; i<22; i++)
@@ -164,11 +170,6 @@ namespace BusInformationManagementProgram_Input
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            string time = DateTime.Now.ToString("HH:mm");
-            string date = DateTime.Now.ToString("dd/MM/yy");
-
-            currentTime.Text = time;
-            currentDate.Text = date;
             string status = CheckStatus(Convert.ToInt32(cmbBxBusNumber.SelectedIndex.ToString()), DateTime.Now.ToString("ddMMyy"));
 
             CreateRecord(cmbBxBusNumber.SelectedIndex.ToString(), DateTime.Now.ToString("HHmm"), DateTime.Now.ToString("ddMMyy"), status);
@@ -176,6 +177,11 @@ namespace BusInformationManagementProgram_Input
 
         private void cmbBxBusNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string time = DateTime.Now.ToString("HH:mm");
+            string date = DateTime.Now.ToString("dd/MM/yy");
+
+            currentTime.Text = time;
+            currentDate.Text = date;
             string status = CheckStatus(Convert.ToInt32(cmbBxBusNumber.SelectedIndex.ToString()), DateTime.Now.ToString("ddMMyy"));
             if(status == "In")
             {

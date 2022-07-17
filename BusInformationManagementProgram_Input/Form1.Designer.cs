@@ -87,11 +87,11 @@ namespace BusInformationManagementProgram_Input
             // date
             // 
             this.date.AutoSize = true;
-            this.date.Location = new System.Drawing.Point(39, 133);
+            this.date.Location = new System.Drawing.Point(33, 133);
             this.date.Name = "date";
-            this.date.Size = new System.Drawing.Size(30, 13);
+            this.date.Size = new System.Drawing.Size(33, 13);
             this.date.TabIndex = 6;
-            this.date.Text = "Date";
+            this.date.Text = "Date:";
             // 
             // currentDate
             // 
