@@ -64,9 +64,16 @@ namespace BusInformationManagementProgram_Input
                 index++;
             }
         }
-        void CreateRecord(string busNumber, string time, string date, string status)
+        void CreateRecord(string busNumber, string time, string date, string status, string type)
         {
-            string type = "SchoolBuses/";
+            if (type == "school")
+            {
+                type = "SchoolBuses/";
+            }
+            else
+            {
+                type = "SportBuses/";
+            }
             BusRecord[] testRecord = busRecordArray[Convert.ToInt32(busNumber)];
             BusRecord[] record = new BusRecord[testRecord.Length + 1];
             for(int i = 0; i<testRecord.Length; i++)
@@ -95,6 +102,7 @@ namespace BusInformationManagementProgram_Input
 
             if (status == "In")
             {
+                b.atSchool = false;
                 departureTime.InnerText = time;
                 atSchool.InnerText = "False";
                 b.departTime = Convert.ToInt32(time);
@@ -124,6 +132,10 @@ namespace BusInformationManagementProgram_Input
         string CheckStatus(int busNumber, string date)
         {
             BusRecord[] record = busRecordArray[busNumber];
+            if (cmbBxBusType.SelectedIndex == 1)
+            {
+                record = sportBusRecordArray[busNumber];
+            }
             int end = record.Length - 1;
             if (record[end].arrivalDate == Convert.ToInt32(date))
             {
@@ -139,8 +151,9 @@ namespace BusInformationManagementProgram_Input
             return "none";
         }
 
-        void FillComboBox(string filePath)
+        void FillBusComboBox(string filePath)
         {
+            cmbBxBusNumber.Items.Clear();
             string[] fileText = System.IO.File.ReadAllLines(filePath);
             foreach(string line in fileText) 
             {
@@ -150,6 +163,8 @@ namespace BusInformationManagementProgram_Input
 
         BusRecord[] busRecord;
         List<BusRecord[]> busRecordArray = new List<BusRecord[]>();
+        List<BusRecord[]> sportBusRecordArray = new List<BusRecord[]>();
+        string[] busTypes = new string[] { "School", "Sport" };
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -159,12 +174,17 @@ namespace BusInformationManagementProgram_Input
             currentTime.Text = time;
             currentDate.Text = date;
 
-            FillComboBox("BusList.txt");
+            cmbBxBusType.Items.AddRange(busTypes);
 
             for(int i = 1; i<22; i++)
             {
                 ReadFile(i, "school");
                 busRecordArray.Add(busRecord);
+            }
+            for (int i = 1; i < 7; i++)
+            {
+                ReadFile(i, "sport");
+                sportBusRecordArray.Add(busRecord);
             }
         }
 
@@ -172,7 +192,12 @@ namespace BusInformationManagementProgram_Input
         {
             string status = CheckStatus(Convert.ToInt32(cmbBxBusNumber.SelectedIndex.ToString()), DateTime.Now.ToString("ddMMyy"));
 
-            CreateRecord(cmbBxBusNumber.SelectedIndex.ToString(), DateTime.Now.ToString("HHmm"), DateTime.Now.ToString("ddMMyy"), status);
+            string type = "school";
+            if (cmbBxBusType.SelectedIndex == 1)
+            {
+                type = "sport";
+            }
+            CreateRecord(cmbBxBusNumber.SelectedIndex.ToString(), DateTime.Now.ToString("HHmm"), DateTime.Now.ToString("ddMMyy"), status, type);
         }
 
         private void cmbBxBusNumber_SelectedIndexChanged(object sender, EventArgs e)
@@ -190,6 +215,18 @@ namespace BusInformationManagementProgram_Input
             else
             {
                 btnCheck.Text = "Check In";
+            }
+        }
+
+        private void cmbBxBusType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cmbBxBusType.SelectedIndex == 0)
+            {
+                FillBusComboBox("BusList.txt");
+            }
+            else
+            {
+                FillBusComboBox("SportsBusList.txt");
             }
         }
     }

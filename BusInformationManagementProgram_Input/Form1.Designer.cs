@@ -36,16 +36,18 @@ namespace BusInformationManagementProgram_Input
             this.currentTime = new System.Windows.Forms.Label();
             this.date = new System.Windows.Forms.Label();
             this.currentDate = new System.Windows.Forms.Label();
+            this.cmbBxBusType = new System.Windows.Forms.ComboBox();
+            this.lblSelectType = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblEnterBusNumber
             // 
             this.lblEnterBusNumber.AutoSize = true;
-            this.lblEnterBusNumber.Location = new System.Drawing.Point(33, 62);
+            this.lblEnterBusNumber.Location = new System.Drawing.Point(33, 67);
             this.lblEnterBusNumber.Name = "lblEnterBusNumber";
-            this.lblEnterBusNumber.Size = new System.Drawing.Size(93, 13);
+            this.lblEnterBusNumber.Size = new System.Drawing.Size(96, 13);
             this.lblEnterBusNumber.TabIndex = 1;
-            this.lblEnterBusNumber.Text = "Enter Bus Number";
+            this.lblEnterBusNumber.Text = "Enter Bus Number:";
             // 
             // btnCheck
             // 
@@ -60,7 +62,7 @@ namespace BusInformationManagementProgram_Input
             // cmbBxBusNumber
             // 
             this.cmbBxBusNumber.FormattingEnabled = true;
-            this.cmbBxBusNumber.Location = new System.Drawing.Point(136, 59);
+            this.cmbBxBusNumber.Location = new System.Drawing.Point(136, 64);
             this.cmbBxBusNumber.Name = "cmbBxBusNumber";
             this.cmbBxBusNumber.Size = new System.Drawing.Size(121, 21);
             this.cmbBxBusNumber.TabIndex = 3;
@@ -69,7 +71,7 @@ namespace BusInformationManagementProgram_Input
             // Time
             // 
             this.Time.AutoSize = true;
-            this.Time.Location = new System.Drawing.Point(36, 100);
+            this.Time.Location = new System.Drawing.Point(33, 100);
             this.Time.Name = "Time";
             this.Time.Size = new System.Drawing.Size(70, 13);
             this.Time.TabIndex = 4;
@@ -98,15 +100,35 @@ namespace BusInformationManagementProgram_Input
             this.currentDate.AutoSize = true;
             this.currentDate.Location = new System.Drawing.Point(70, 133);
             this.currentDate.Name = "currentDate";
-            this.currentDate.Size = new System.Drawing.Size(35, 13);
+            this.currentDate.Size = new System.Drawing.Size(53, 13);
             this.currentDate.TabIndex = 7;
-            this.currentDate.Text = "label1";
+            this.currentDate.Text = "00/00/00";
+            // 
+            // cmbBxBusType
+            // 
+            this.cmbBxBusType.FormattingEnabled = true;
+            this.cmbBxBusType.Location = new System.Drawing.Point(136, 32);
+            this.cmbBxBusType.Name = "cmbBxBusType";
+            this.cmbBxBusType.Size = new System.Drawing.Size(121, 21);
+            this.cmbBxBusType.TabIndex = 8;
+            this.cmbBxBusType.SelectedIndexChanged += new System.EventHandler(this.cmbBxBusType_SelectedIndexChanged);
+            // 
+            // lblSelectType
+            // 
+            this.lblSelectType.AutoSize = true;
+            this.lblSelectType.Location = new System.Drawing.Point(33, 35);
+            this.lblSelectType.Name = "lblSelectType";
+            this.lblSelectType.Size = new System.Drawing.Size(67, 13);
+            this.lblSelectType.TabIndex = 9;
+            this.lblSelectType.Text = "Select Type:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(445, 356);
+            this.Controls.Add(this.lblSelectType);
+            this.Controls.Add(this.cmbBxBusType);
             this.Controls.Add(this.currentDate);
             this.Controls.Add(this.date);
             this.Controls.Add(this.currentTime);
@@ -115,7 +137,7 @@ namespace BusInformationManagementProgram_Input
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.lblEnterBusNumber);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Bus Information Management Program";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -130,6 +152,8 @@ namespace BusInformationManagementProgram_Input
         private System.Windows.Forms.Label currentTime;
         private System.Windows.Forms.Label date;
         private System.Windows.Forms.Label currentDate;
+        private System.Windows.Forms.ComboBox cmbBxBusType;
+        private System.Windows.Forms.Label lblSelectType;
     }
 }
 
